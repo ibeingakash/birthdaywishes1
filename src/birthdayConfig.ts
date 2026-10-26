@@ -1,62 +1,71 @@
 /**
  * -----------------------------------------------------------------------------
- * PERSONAL BIRTHDAY CELEBRATION CONFIGURATION — FOR KETI
+ * WARM SCRAPBOOK BIRTHDAY CELEBRATION CONFIGURATION — FOR KETI
  * -----------------------------------------------------------------------------
- * A personal birthday surprise crafted specifically for Keti.
+ * Faithful recreation of the warm cinematic scrapbook design for Keti.
  * -----------------------------------------------------------------------------
  */
 
-export interface GalleryPhoto {
+export interface GalleryItem {
   id: string;
-  url: string; // File path or URL to Keti's real photograph
   title: string;
-  caption: string;
-  dateOrPlace?: string;
-  isPlaceholder?: boolean;
+  category: 'candid' | 'places' | 'little_things';
+  cropKey?: string;
+  caption?: string;
 }
 
-export interface SurpriseWish {
+export interface PastelWish {
   id: string;
-  title: string;
-  symbol: string;
-  theme: string;
-  shortSnippet: string;
-  fullMessage: string;
-  quote?: string;
+  message: string;
+  bgColor: string;
+  borderColor: string;
+  accentColor: string;
 }
 
 export interface BirthdayConfig {
   recipient: {
     name: string;
-    nickname: string;
+    greeting: string;
+    shortMessage: string;
+    handwrittenQuote: string;
+    buttonText: string;
+  };
+  introduction: {
     title: string;
-    subtitle: string;
-    openingInvitation: string;
+    scriptNote: string;
+    polaroidCaption: string;
+    chapters: { number: string; title: string; sceneIndex: number }[];
   };
-  letter: {
-    heading: string;
-    salutation: string;
-    paragraphs: string[];
-    closing: string;
-    signature: string;
-  };
-  celestialScene: {
+  moments: {
     eyebrow: string;
-    headline: string;
+    title: string;
     description: string;
-    interactionHint: string;
+    handwrittenAnnotation: string;
+    categories: string[];
+    polaroids: {
+      id: string;
+      title: string;
+      caption?: string;
+      cropKey: string;
+      rotation: string;
+    }[];
   };
   gallery: {
     eyebrow: string;
-    headline: string;
-    description: string;
-    photos: GalleryPhoto[];
+    title: string;
+    items: GalleryItem[];
+  };
+  letter: {
+    salutation: string;
+    paragraphs: string[];
+    celebrationText: string;
+    signOff: string;
   };
   wishes: {
     eyebrow: string;
-    headline: string;
-    description: string;
-    list: SurpriseWish[];
+    title: string;
+    handwrittenAnnotation: string;
+    cards: PastelWish[];
   };
   cake: {
     eyebrow: string;
@@ -78,121 +87,137 @@ export interface BirthdayConfig {
 export const birthdayConfig: BirthdayConfig = {
   recipient: {
     name: "Keti",
-    nickname: "Keti ✨",
-    title: "A Birthday Journey for Keti",
-    subtitle: "A private starlight experience, made with thought and care to celebrate your special day.",
-    openingInvitation: "Today is all about you. Step inside to begin your birthday journey."
+    greeting: "Happy\nBirthday",
+    shortMessage: "Today is a reminder that the world is a brighter, kinder, and more beautiful place because you are in it.",
+    handwrittenQuote: "Some people just make the world feel brighter. ♡",
+    buttonText: "Open Your Birthday Surprise →"
   },
 
-  celestialScene: {
-    eyebrow: "Act II · The Celestial Journey",
-    headline: "A Realm Under Starlight",
-    description: "I wanted to create something timeless for your birthday—an interactive sphere of light reflecting the quiet grace and brightness you bring into the world.",
-    interactionHint: "Drag gently to rotate the sphere · Tap anywhere to cast stardust ripples"
+  introduction: {
+    title: "Happy Birthday Keti",
+    scriptNote: "A little journey through beautiful moments, wishes and a day that is all about you... ♡",
+    polaroidCaption: "Let's begin ♡",
+    chapters: [
+      { number: "01", title: "A Special Day", sceneIndex: 0 },
+      { number: "02", title: "Memories", sceneIndex: 2 },
+      { number: "03", title: "A Letter", sceneIndex: 4 },
+      { number: "04", title: "Wishes", sceneIndex: 5 },
+      { number: "05", title: "A Little Magic", sceneIndex: 3 },
+      { number: "06", title: "The Cake", sceneIndex: 6 }
+    ]
   },
 
-  gallery: {
-    eyebrow: "Act III · Portraits & Memories",
-    headline: "Celebrating You, Keti",
-    description: "A quiet celebration of your warmth, your sincerity, and the memorable presence you carry into every room.",
-    photos: [
+  moments: {
+    eyebrow: "A COLLECTION OF ♥",
+    title: "Beautiful Moments",
+    description: "Little glimpses of your world, your smile, your vibe, and the things that make you, you.",
+    handwrittenAnnotation: "You make every ordinary moment feel special ♡",
+    categories: ["All", "Candid", "Places", "Little Things"],
+    polaroids: [
       {
-        id: "keti-portrait-1",
-        url: "", // Insert Keti's photo path here, e.g. "/src/assets/images/keti_1.jpg"
-        title: "Grace & Thoughtfulness",
-        caption: "Celebrating your poise, your gentle perspective on life, and your genuine nature.",
-        dateOrPlace: "Portrait 01",
-        isPlaceholder: true
+        id: "moments-1",
+        title: "Spring Sunlight",
+        caption: "gentle breeze ♡",
+        cropKey: "scene3_polaroid_top",
+        rotation: "-rotate-2"
       },
       {
-        id: "keti-portrait-2",
-        url: "", // Insert Keti's photo path here, e.g. "/src/assets/images/keti_2.jpg"
-        title: "Radiant Smile",
-        caption: "A reminder of the easy laughter and warmth that makes everyone around you feel comfortable.",
-        dateOrPlace: "Portrait 02",
-        isPlaceholder: true
+        id: "moments-2",
+        title: "Golden Hour",
+        caption: "stargazing",
+        cropKey: "scene3_polaroid_mid",
+        rotation: "rotate-3"
       },
       {
-        id: "keti-portrait-3",
-        url: "", // Insert Keti's photo path here, e.g. "/src/assets/images/keti_3.jpg"
-        title: "The Year Ahead",
-        caption: "Stepping into this new chapter with confidence, new curiosities, and quiet triumph.",
-        dateOrPlace: "Portrait 03",
-        isPlaceholder: true
+        id: "moments-3",
+        title: "Quiet Mornings",
+        caption: "warm tea",
+        cropKey: "scene3_polaroid_right",
+        rotation: "-rotate-1"
       }
     ]
   },
 
+  gallery: {
+    eyebrow: "MEMORIES & GLIMPSES",
+    title: "Photo Gallery",
+    items: [
+      { id: "g-1", title: "City Viewpoint", category: "places", cropKey: "scene4_thumb_1" },
+      { id: "g-2", title: "Warm Morning", category: "candid", cropKey: "scene4_thumb_2" },
+      { id: "g-3", title: "Gentle Breeze", category: "candid", cropKey: "scene4_thumb_3" },
+      { id: "g-4", title: "Sunlit Rooftop", category: "places", cropKey: "scene4_thumb_4" },
+      { id: "g-5", title: "Distant Skyline", category: "places", cropKey: "scene4_thumb_5" },
+      { id: "g-6", title: "Strolls in Bloom", category: "little_things", cropKey: "scene4_thumb_6" },
+      { id: "g-7", title: "Evening Lights", category: "places", cropKey: "scene4_thumb_7" },
+      { id: "g-8", title: "Cozy Sweaters", category: "little_things", cropKey: "scene4_thumb_8" }
+    ]
+  },
+
   letter: {
-    heading: "A Birthday Letter for You",
     salutation: "Dear Keti,",
     paragraphs: [
-      "Happy Birthday! Today gives us a chance to pause and celebrate someone truly wonderful. I built this space for you because an ordinary birthday card simply could not capture how much you are appreciated.",
-      "You have a rare combination of genuine kindness, sharp intelligence, and a grounded warmth that stays with everyone who knows you. The way you listen attentively, your thoughtful insights, and your ability to bring light into everyday conversations are things I admire deeply.",
-      "As you begin this new year of your life, I hope you take pride in everything you have accomplished and the person you have become. May this next chapter give you the space to pursue whatever makes your heart feel full—quiet moments of contentment, exciting new endeavors, and peaceful mornings where there is no rush.",
-      "May good health, true fulfillment, and deep joy follow you wherever you go. You deserve a year as exceptional, bright, and meaningful as you are."
+      "On your special day, I just wanted to say how truly wonderful it is to have you in this world.",
+      "May this year bring you more joy, peace, beautiful opportunities and all the happiness you deserve.",
+      "Keep being the amazing person you are."
     ],
-    closing: "With my highest admiration, warmest thoughts, and sincere blessings,",
-    signature: "Always wishing you the very best"
+    celebrationText: "Happy Birthday, Keti!",
+    signOff: "— With warm wishes ♥"
   },
 
   wishes: {
-    eyebrow: "Act V · Five Blessings",
-    headline: "A Constellation of Birthday Wishes",
-    description: "Five personal wishes I have chosen for you for the year ahead. Tap each star to reveal its blessing.",
-    list: [
+    eyebrow: "BIRTHDAY WISHES",
+    title: "A Brighter Year for You",
+    handwrittenAnnotation: "May this year be filled with all the good things you truly deserve. ♡",
+    cards: [
       {
-        id: "wish-joy",
-        title: "Spontaneous Joy",
-        symbol: "✦",
-        theme: "Delight & Laughter",
-        shortSnippet: "May genuine laughter and unexpected happiness find you in everyday moments.",
-        fullMessage: "I wish you days full of genuine, unhurried laughter—the kind that sneaks up on you in conversation and leaves you smiling for hours afterwards. May spontaneous moments of delight meet you around every corner.",
-        quote: "“May your year be marked not by its busyness, but by the richness of its happiest moments.”"
+        id: "wish-1",
+        message: "May you always find happiness in the little things. ♡ ♥",
+        bgColor: "bg-[#faeaeb]",
+        borderColor: "border-[#f4cfd2]",
+        accentColor: "text-[#c24f60]"
       },
       {
-        id: "wish-peace",
-        title: "Quiet Sanctuary",
-        symbol: "☽",
-        theme: "Peace & Groundedness",
-        shortSnippet: "May your days be anchored by steady calm and peaceful mornings.",
-        fullMessage: "Whenever life feels crowded or loud, I hope you always find an inner calm to recharge. May you always have unhurried mornings, deep rest, and the quiet assurance of how much you are respected.",
-        quote: "“In the midst of movement and chaos, keep stillness inside of you.”"
+        id: "wish-2",
+        message: "May your dreams take you to places you've always wanted to be. ♥",
+        bgColor: "bg-[#fdf0e6]",
+        borderColor: "border-[#fadac5]",
+        accentColor: "text-[#cf693e]"
       },
       {
-        id: "wish-curiosity",
-        title: "Exciting Horizons",
-        symbol: "✧",
-        theme: "Curiosity & Discovery",
-        shortSnippet: "For every new path you explore and every curiosity you pursue.",
-        fullMessage: "May you continue exploring things that thrill your mind and feed your intellectual curiosity. May you visit inspiring places, read books that stay with you, and discover new facets of yourself.",
-        quote: "“The world reveals its finest secrets to those who look with wonder.”"
+        id: "wish-3",
+        message: "May you stay surrounded by kind people and positive energy. ♥",
+        bgColor: "bg-[#eaf4ee]",
+        borderColor: "border-[#d0e6d8]",
+        accentColor: "text-[#3f7d58]"
       },
       {
-        id: "wish-courage",
-        title: "Quiet Courage",
-        symbol: "★",
-        theme: "Confidence & Growth",
-        shortSnippet: "To trust your own instincts and stride forward without hesitation.",
-        fullMessage: "You carry a quiet, steady strength within you. Whenever you face new decisions or exciting crossroads, I wish you unwavering confidence in your wisdom, knowing how capable you truly are.",
-        quote: "“Trust yourself; you know more than you think you do.”"
+        id: "wish-4",
+        message: "May you keep smiling, because your smile makes everything brighter. ♥",
+        bgColor: "bg-[#fceef1]",
+        borderColor: "border-[#fad5de]",
+        accentColor: "text-[#ba4663]"
       },
       {
-        id: "wish-warmth",
-        title: "Cherished Moments",
-        symbol: "♥",
-        theme: "Belonging & Care",
-        shortSnippet: "Surrounded always by people who value, support, and believe in you.",
-        fullMessage: "Above all, may you always feel deeply appreciated and cared for. You have given so much warmth to the people in your life, and I hope this year reflects every bit of that kindness right back to you.",
-        quote: "“Kindness is a language which the deaf can hear and the blind can see.”"
+        id: "wish-5",
+        message: "May this year bring you new opportunities and beautiful experiences. ♥",
+        bgColor: "bg-[#f7f8e8]",
+        borderColor: "border-[#e5ebc6]",
+        accentColor: "text-[#6d7a2b]"
+      },
+      {
+        id: "wish-6",
+        message: "May you always be proud of who you are and how far you've come. ♥",
+        bgColor: "bg-[#f4edf6]",
+        borderColor: "border-[#e5d4ea]",
+        accentColor: "text-[#7f4a91]"
       }
     ]
   },
 
   cake: {
-    eyebrow: "The Finale",
-    headline: "Make a Birthday Wish, Keti",
-    subheadline: "Tap the candles to light your birthday flames, make your private wish, and blow them out.",
+    eyebrow: "THE FINAL CELEBRATION",
+    headline: "Make a Birthday Wish, Keti!",
+    subheadline: "Light your candles, make a wish, and let this moment be yours.",
     candleCount: 5,
     celebrationTitle: "Happy Birthday, Keti! 🎂✨",
     celebrationSubtitle: "May all your quiet hopes and brightest dreams come true.",
@@ -200,8 +225,8 @@ export const birthdayConfig: BirthdayConfig = {
   },
 
   music: {
-    title: "Celestial Lullaby",
-    artist: "Ambient Starlight Chimes",
+    title: "Acoustic Birthday Serenade",
+    artist: "Gentle Strings & Chimes",
     useSynthesizedAmbient: true,
     customAudioUrl: ""
   }

@@ -1,15 +1,20 @@
 import { useState, useEffect } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { audioEngine } from '../utils/audio';
-import { birthdayConfig } from '../birthdayConfig';
-import { SCENES } from './SceneNavigationControls';
 
 interface HeaderNavProps {
   currentScene: number;
+  totalScenes: number;
   onNavigateScene: (sceneIndex: number) => void;
+  isDarkTheme?: boolean;
 }
 
-export default function HeaderNav({ currentScene, onNavigateScene }: HeaderNavProps) {
+export default function HeaderNav({
+  currentScene,
+  totalScenes,
+  onNavigateScene,
+  isDarkTheme = false
+}: HeaderNavProps) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
@@ -23,49 +28,49 @@ export default function HeaderNav({ currentScene, onNavigateScene }: HeaderNavPr
     await audioEngine.toggle();
   };
 
-  const currentMeta = SCENES[currentScene] || SCENES[0];
+  const sceneNumber = String(currentScene + 1).padStart(2, '0');
+  const totalNumber = String(totalScenes).padStart(2, '0');
+
+  const textColor = isDarkTheme ? 'text-[#fbf5eb]' : 'text-[#3b121b]';
+  const subColor = isDarkTheme ? 'text-[#d6b7b2]' : 'text-[#84535c]';
+  const borderBg = isDarkTheme ? 'border-[#3d1a24]/40 bg-[#1e0a11]/40' : 'border-[#eeddcc]/50 bg-[#fdfbf7]/70';
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-40 h-14 sm:h-16 px-6 sm:px-10 flex items-center justify-between border-b border-[#14303b]/40 bg-[#061217]/60 backdrop-blur-md">
-      {/* Brand Zone: Personal Dedication */}
+    <header className={`fixed top-0 left-0 right-0 z-40 h-14 sm:h-16 px-6 sm:px-10 flex items-center justify-between border-b backdrop-blur-md transition-colors duration-500 ${borderBg}`}>
+      {/* Brand Zone: "Happy Birthday Keti ♥" */}
       <button
         onClick={() => onNavigateScene(0)}
         type="button"
-        className="font-serif text-lg sm:text-xl font-semibold tracking-wide text-[#faeed1] hover:text-white transition-colors whitespace-nowrap shrink-0 flex items-center gap-2 cursor-pointer"
+        className={`font-serif text-lg sm:text-xl font-normal tracking-wide transition-opacity hover:opacity-80 flex items-center gap-1.5 cursor-pointer ${textColor}`}
       >
-        <span>For {birthdayConfig.recipient.name}</span>
-        <span className="text-xs text-[#e6c887] opacity-80" aria-hidden="true">✨</span>
+        <span>Happy Birthday Keti</span>
+        <span className="text-sm text-[#e0837b]">♥</span>
       </button>
 
-      {/* Center Indicator */}
-      <div className="hidden sm:flex items-center gap-2 text-xs text-[#8ab0be] font-medium tracking-wide">
-        <span className="text-[#e6c887] font-serif">{currentMeta.number}</span>
-        <span className="text-[#416270]">/</span>
-        <span className="text-[#658b99]">06</span>
-        <span className="text-[#416270]">·</span>
-        <span className="text-[#d7e9f0] font-light">{currentMeta.label}</span>
-      </div>
+      {/* Right Controls: Scene Counter & Ambient Audio */}
+      <div className="flex items-center gap-4 sm:gap-6">
+        {/* Discrete Scene Counter */}
+        <div className={`font-serif text-xs sm:text-sm tracking-widest font-medium ${subColor}`}>
+          <span className={textColor}>{sceneNumber}</span>
+          <span className="mx-1 opacity-50">/</span>
+          <span>{totalNumber}</span>
+        </div>
 
-      {/* Ambient Audio Action */}
-      <div className="flex items-center gap-3 shrink-0">
+        {/* Ambient Audio Toggle */}
         <button
           onClick={handleAudioToggle}
           type="button"
-          aria-label={isPlaying ? 'Mute celestial ambient music' : 'Play celestial ambient music'}
-          className="flex items-center gap-2 px-3 sm:px-3.5 py-1.5 text-xs font-medium text-[#faeed1] bg-[#0c242e] border border-[#1d4554] rounded-xl hover:bg-[#123340] hover:border-[#e6c887]/50 transition-all whitespace-nowrap shrink-0 cursor-pointer shadow-sm active:scale-95"
+          aria-label={isPlaying ? 'Pause music' : 'Play music'}
+          className={`p-2 rounded-full border transition-all cursor-pointer active:scale-95 ${
+            isDarkTheme
+              ? 'bg-[#2d1119] border-[#481f2a] text-[#fbf5eb] hover:bg-[#3d1823]'
+              : 'bg-[#f8f1e6] border-[#e5d6c5] text-[#4d212a] hover:bg-[#efe4d2]'
+          }`}
         >
           {isPlaying ? (
-            <>
-              <Volume2 className="w-3.5 h-3.5 text-[#e6c887] animate-pulse" />
-              <span className="hidden sm:inline">Ambient Audio</span>
-              <span className="sm:hidden">Playing</span>
-            </>
+            <Volume2 className="w-3.5 h-3.5 text-[#e0837b] animate-pulse" />
           ) : (
-            <>
-              <VolumeX className="w-3.5 h-3.5 text-[#8ab0be]" />
-              <span className="hidden sm:inline">Play Ambient</span>
-              <span className="sm:hidden">Music</span>
-            </>
+            <VolumeX className="w-3.5 h-3.5 opacity-60" />
           )}
         </button>
       </div>

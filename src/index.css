@@ -20,11 +20,41 @@
 }
 
 .font-serif {
+  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-editorial {
   font-family: 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-script {
+  font-family: 'Caveat', cursive;
+}
+
+.font-signature {
+  font-family: 'Alex Brush', cursive;
 }
 
 .font-sans {
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+.paper-texture {
+  background-color: #fbf6ee;
+  background-image: radial-gradient(#eadbc8 0.75px, transparent 0.75px), radial-gradient(#eadbc8 0.75px, #fbf6ee 0.75px);
+  background-size: 30px 30px;
+  background-position: 0 0, 15px 15px;
+}
+
+.paper-shadow {
+  box-shadow: 0 10px 30px -5px rgba(45, 20, 26, 0.14), 0 4px 12px -2px rgba(45, 20, 26, 0.08);
+}
+
+.polaroid-frame {
+  background: #ffffff;
+  padding: 12px 12px 34px 12px;
+  box-shadow: 0 12px 30px -4px rgba(45, 20, 26, 0.18), 0 4px 10px -2px rgba(45, 20, 26, 0.1);
+  border-radius: 2px;
 }
 
 /* Custom cinematic glow and animation utilities */
@@ -82,6 +112,32 @@
 
 .animate-pulse-glow {
   animation: pulseGlow 5s ease-in-out infinite;
+}
+
+@keyframes slowSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes reverseSpin {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: slowSpin 90s linear infinite;
+}
+
+.animate-spin-reverse-slow {
+  animation: reverseSpin 75s linear infinite;
 }
 
 /* Subtle scrollbar */

@@ -1,20 +1,20 @@
-import { ChevronLeft, ChevronRight, RotateCcw } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { audioEngine } from '../utils/audio';
 
 export interface SceneMeta {
   id: string;
   label: string;
-  shortLabel: string;
   number: string;
 }
 
 export const SCENES: SceneMeta[] = [
-  { id: 'invitation', label: 'A Birthday Invitation', shortLabel: 'Invitation', number: '01' },
-  { id: 'portal', label: 'The Celestial Journey', shortLabel: 'Journey', number: '02' },
-  { id: 'gallery', label: "Keti's Portraits", shortLabel: 'Portraits', number: '03' },
-  { id: 'letter', label: 'A Birthday Letter', shortLabel: 'Letter', number: '04' },
-  { id: 'constellation', label: 'Constellation of Wishes', shortLabel: 'Wishes', number: '05' },
-  { id: 'cake', label: 'The Birthday Finale', shortLabel: 'Finale', number: '06' },
+  { id: 'invitation', label: 'Birthday Invitation', number: '01' },
+  { id: 'introduction', label: 'A Special Day', number: '02' },
+  { id: 'moments', label: 'Beautiful Moments', number: '03' },
+  { id: 'gallery', label: 'Photo Gallery', number: '04' },
+  { id: 'letter', label: 'A Birthday Letter', number: '05' },
+  { id: 'wishes', label: 'Birthday Wishes', number: '06' },
+  { id: 'cake', label: 'The Birthday Cake', number: '07' }
 ];
 
 interface SceneNavigationControlsProps {
@@ -23,6 +23,7 @@ interface SceneNavigationControlsProps {
   onNavigate: (index: number) => void;
   onNext: () => void;
   onPrev: () => void;
+  isDarkTheme?: boolean;
 }
 
 export default function SceneNavigationControls({
@@ -31,9 +32,12 @@ export default function SceneNavigationControls({
   onNavigate,
   onNext,
   onPrev,
+  isDarkTheme = false
 }: SceneNavigationControlsProps) {
-  const isFirst = currentScene === 0;
-  const isLast = currentScene === totalScenes - 1;
+  // Hide on Scene 0 (Invitation has its own primary "Open Your Birthday Surprise" button)
+  if (currentScene === 0) {
+    return null;
+  }
 
   const handleStepClick = (idx: number) => {
     if (idx !== currentScene) {
@@ -42,13 +46,20 @@ export default function SceneNavigationControls({
     }
   };
 
+  const isFirst = currentScene === 0;
+  const isLast = currentScene === totalScenes - 1;
+
+  const btnBg = isDarkTheme
+    ? 'bg-[#261017]/90 text-[#fbf5eb] border-[#421d28] hover:bg-[#381822]'
+    : 'bg-[#ffffff]/90 text-[#3b121b] border-[#e8d8c8] hover:bg-[#f6eee4]';
+
   return (
     <nav
       aria-label="Scene navigation"
-      className="fixed bottom-3 sm:bottom-5 left-0 right-0 z-40 pointer-events-none px-4 flex justify-center"
+      className="fixed bottom-4 left-0 right-0 z-40 pointer-events-none px-6 flex justify-between items-center max-w-5xl mx-auto"
     >
-      <div className="pointer-events-auto flex items-center gap-3 sm:gap-5 bg-[#06161e]/90 backdrop-blur-md border border-[#143947]/80 py-2 px-3.5 sm:px-5 rounded-full shadow-2xl">
-        {/* Previous Button */}
+      {/* Previous Button */}
+      <div className="pointer-events-auto">
         {!isFirst ? (
           <button
             onClick={() => {
@@ -57,41 +68,34 @@ export default function SceneNavigationControls({
             }}
             type="button"
             aria-label="Previous scene"
-            className="flex items-center gap-1 text-xs text-[#9ebac6] hover:text-[#faeed1] py-1 px-2 rounded-full hover:bg-[#0c2732] transition-colors cursor-pointer group active:scale-95"
+            className={`w-9 h-9 rounded-full flex items-center justify-center border shadow-md transition-all active:scale-95 cursor-pointer ${btnBg}`}
           >
-            <ChevronLeft className="w-3.5 h-3.5 text-[#e6c887] group-hover:-translate-x-0.5 transition-transform" />
-            <span className="hidden sm:inline font-medium">Back</span>
+            <ChevronLeft className="w-4 h-4" />
           </button>
         ) : (
-          <div className="w-4 sm:w-8" />
+          <div className="w-9 h-9" />
         )}
+      </div>
 
-        {/* 6 Progress Dots */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
-          {SCENES.map((scene, idx) => {
-            const isActive = idx === currentScene;
-            const isPast = idx < currentScene;
-            return (
-              <button
-                key={scene.id}
-                onClick={() => handleStepClick(idx)}
-                type="button"
-                title={`${scene.number}: ${scene.label}`}
-                aria-label={`Jump to ${scene.label}`}
-                aria-current={isActive ? 'step' : undefined}
-                className={`transition-all duration-300 rounded-full cursor-pointer ${
-                  isActive
-                    ? 'w-5 sm:w-6 h-1.5 sm:h-2 bg-gradient-to-r from-[#fae8b2] to-[#e6c887] shadow-[0_0_8px_rgba(230,200,135,0.7)]'
-                    : isPast
-                    ? 'w-1.5 sm:w-2 h-1.5 sm:h-2 bg-[#7cd3cf]/70 hover:bg-[#faeed1]'
-                    : 'w-1.5 sm:w-2 h-1.5 sm:h-2 bg-[#1b4352] hover:bg-[#9ec0cc]'
-                }`}
-              />
-            );
-          })}
-        </div>
+      {/* Discrete Step Indicators */}
+      <div className="pointer-events-auto flex items-center gap-2 bg-[#fdfaf5]/80 dark:bg-[#1b080e]/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#ebdccf]/60 shadow-sm">
+        {Array.from({ length: totalScenes }).map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => handleStepClick(idx)}
+            type="button"
+            aria-label={`Go to scene ${idx + 1}`}
+            className={`transition-all rounded-full cursor-pointer ${
+              idx === currentScene
+                ? 'w-5 h-1.5 bg-[#d97d74]'
+                : 'w-1.5 h-1.5 bg-[#cfb5a6] hover:bg-[#a87a6d]'
+            }`}
+          />
+        ))}
+      </div>
 
-        {/* Next / Replay Button */}
+      {/* Next Button */}
+      <div className="pointer-events-auto">
         {!isLast ? (
           <button
             onClick={() => {
@@ -100,24 +104,12 @@ export default function SceneNavigationControls({
             }}
             type="button"
             aria-label="Next scene"
-            className="flex items-center gap-1 text-xs text-[#061217] bg-gradient-to-r from-[#fae8b2] to-[#e6c887] font-medium py-1 px-3 sm:px-3.5 rounded-full transition-all hover:shadow-[0_0_12px_rgba(230,200,135,0.4)] cursor-pointer group active:scale-95"
+            className={`w-9 h-9 rounded-full flex items-center justify-center border shadow-md transition-all active:scale-95 cursor-pointer ${btnBg}`}
           >
-            <span>Next</span>
-            <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            <ChevronRight className="w-4 h-4" />
           </button>
         ) : (
-          <button
-            onClick={() => {
-              audioEngine.playCelebrationChimes();
-              onNavigate(0);
-            }}
-            type="button"
-            aria-label="Replay journey from beginning"
-            className="flex items-center gap-1 text-xs text-[#e6c887] hover:text-[#faeed1] py-1 px-2.5 rounded-full hover:bg-[#0c2732] transition-colors cursor-pointer group"
-          >
-            <RotateCcw className="w-3 h-3 group-hover:-rotate-45 transition-transform" />
-            <span className="font-medium">Replay</span>
-          </button>
+          <div className="w-9 h-9" />
         )}
       </div>
     </nav>
