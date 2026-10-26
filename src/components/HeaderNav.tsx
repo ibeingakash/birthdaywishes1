@@ -27,7 +27,7 @@ export default function HeaderNav({ currentScene, onNavigateScene }: HeaderNavPr
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 h-14 sm:h-16 px-6 sm:px-10 flex items-center justify-between border-b border-[#14303b]/40 bg-[#061217]/60 backdrop-blur-md">
-      {/* Brand Zone */}
+      {/* Brand Zone: Personal Dedication */}
       <button
         onClick={() => onNavigateScene(0)}
         type="button"
@@ -37,16 +37,16 @@ export default function HeaderNav({ currentScene, onNavigateScene }: HeaderNavPr
         <span className="text-xs text-[#e6c887] opacity-80" aria-hidden="true">✨</span>
       </button>
 
-      {/* Quiet Center Indicator */}
+      {/* Center Indicator */}
       <div className="hidden sm:flex items-center gap-2 text-xs text-[#8ab0be] font-medium tracking-wide">
         <span className="text-[#e6c887] font-serif">{currentMeta.number}</span>
         <span className="text-[#416270]">/</span>
-        <span className="text-[#658b99]">07</span>
+        <span className="text-[#658b99]">06</span>
         <span className="text-[#416270]">·</span>
         <span className="text-[#d7e9f0] font-light">{currentMeta.label}</span>
       </div>
 
-      {/* Music Action */}
+      {/* Ambient Audio Action */}
       <div className="flex items-center gap-3 shrink-0">
         <button
           onClick={handleAudioToggle}

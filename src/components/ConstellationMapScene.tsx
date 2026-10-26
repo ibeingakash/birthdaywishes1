@@ -163,7 +163,7 @@ export default function ConstellationMapScene({ onContinue }: ConstellationMapSc
           type="button"
           className="flex items-center gap-2 px-6 py-2.5 bg-gradient-to-r from-[#fae8b2] via-[#e6c887] to-[#d4af37] text-[#061217] text-xs font-medium uppercase tracking-wider rounded-xl transition-all hover:shadow-[0_0_25px_rgba(230,200,135,0.45)] cursor-pointer active:scale-95 shadow-md"
         >
-          <span>The Wish Capsule</span>
+          <span>The Birthday Finale</span>
           <ArrowRight className="w-3.5 h-3.5 text-[#061217]" />
         </button>
       </div>

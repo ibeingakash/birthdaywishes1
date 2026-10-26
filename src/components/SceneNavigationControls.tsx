@@ -9,13 +9,12 @@ export interface SceneMeta {
 }
 
 export const SCENES: SceneMeta[] = [
-  { id: 'invitation', label: 'The Invitation', shortLabel: 'Invitation', number: '01' },
-  { id: 'portal', label: 'Celestial Portal', shortLabel: 'Portal', number: '02' },
+  { id: 'invitation', label: 'A Birthday Invitation', shortLabel: 'Invitation', number: '01' },
+  { id: 'portal', label: 'The Celestial Journey', shortLabel: 'Journey', number: '02' },
   { id: 'gallery', label: "Keti's Portraits", shortLabel: 'Portraits', number: '03' },
-  { id: 'letter', label: 'A Letter for Keti', shortLabel: 'Letter', number: '04' },
+  { id: 'letter', label: 'A Birthday Letter', shortLabel: 'Letter', number: '04' },
   { id: 'constellation', label: 'Constellation of Wishes', shortLabel: 'Wishes', number: '05' },
-  { id: 'capsule', label: 'The Wish Capsule', shortLabel: 'Capsule', number: '06' },
-  { id: 'cake', label: 'Birthday Finale', shortLabel: 'Finale', number: '07' },
+  { id: 'cake', label: 'The Birthday Finale', shortLabel: 'Finale', number: '06' },
 ];
 
 interface SceneNavigationControlsProps {
@@ -45,7 +44,7 @@ export default function SceneNavigationControls({
 
   return (
     <nav
-      aria-label="Scene progress navigation"
+      aria-label="Scene navigation"
       className="fixed bottom-3 sm:bottom-5 left-0 right-0 z-40 pointer-events-none px-4 flex justify-center"
     >
       <div className="pointer-events-auto flex items-center gap-3 sm:gap-5 bg-[#06161e]/90 backdrop-blur-md border border-[#143947]/80 py-2 px-3.5 sm:px-5 rounded-full shadow-2xl">
@@ -64,10 +63,10 @@ export default function SceneNavigationControls({
             <span className="hidden sm:inline font-medium">Back</span>
           </button>
         ) : (
-          <div className="w-4 sm:w-10" />
+          <div className="w-4 sm:w-8" />
         )}
 
-        {/* Progress Dots */}
+        {/* 6 Progress Dots */}
         <div className="flex items-center gap-1.5 sm:gap-2">
           {SCENES.map((scene, idx) => {
             const isActive = idx === currentScene;

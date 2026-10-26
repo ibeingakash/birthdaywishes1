@@ -13,7 +13,6 @@ import CelestialInteractiveScene from './components/CelestialInteractiveScene';
 import PhotoGallery from './components/PhotoGallery';
 import BirthdayLetter from './components/BirthdayLetter';
 import ConstellationMapScene from './components/ConstellationMapScene';
-import WishCapsuleScene from './components/WishCapsuleScene';
 import BirthdayCakeScene from './components/BirthdayCakeScene';
 
 export default function App() {
@@ -98,16 +97,9 @@ export default function App() {
         );
       case 5:
         return (
-          <WishCapsuleScene
-            onContinue={() => goToScene(6)}
-            onPrev={() => goToScene(4)}
-          />
-        );
-      case 6:
-        return (
           <BirthdayCakeScene
             onReplay={() => goToScene(0)}
-            onPrev={() => goToScene(5)}
+            onPrev={() => goToScene(4)}
           />
         );
       default:

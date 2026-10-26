@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'motion/react';
-import { Sparkles, Eye, RefreshCw, Wand2, ArrowRight } from 'lucide-react';
+import { Eye, RefreshCw, Wand2, ArrowRight } from 'lucide-react';
 import { birthdayConfig } from '../birthdayConfig';
 import { audioEngine } from '../utils/audio';
 
@@ -22,7 +22,6 @@ export default function CelestialInteractiveScene({ onContinue }: CelestialInter
   const [rotation, setRotation] = useState({ x: 20, y: -15 });
   const [isInteracting, setIsInteracting] = useState(false);
   const [mode, setMode] = useState<'radiance' | 'starlight'>('radiance');
-  const [interactionCount, setInteractionCount] = useState(0);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -46,8 +45,6 @@ export default function CelestialInteractiveScene({ onContinue }: CelestialInter
         color: colors[Math.floor(Math.random() * colors.length)]
       });
     }
-
-    setInteractionCount((prev) => prev + 1);
 
     const freqs = [329.63, 392.0, 440.0, 523.25, 659.25, 783.99];
     const pickedFreq = freqs[Math.floor(Math.random() * freqs.length)];
@@ -150,7 +147,7 @@ export default function CelestialInteractiveScene({ onContinue }: CelestialInter
 
   return (
     <section className="relative w-full h-[100svh] min-h-[620px] flex flex-col items-center justify-between px-6 pt-16 pb-16 select-none overflow-hidden">
-      {/* Background Environment: Astrological Coordinate Circles */}
+      {/* Background Environment */}
       <div className="absolute inset-0 pointer-events-none flex items-center justify-center opacity-40">
         <div className="w-[500px] sm:w-[800px] h-[500px] sm:h-[800px] rounded-full border border-[#1b4352]/30" />
         <div className="absolute w-[360px] sm:w-[580px] h-[360px] sm:h-[580px] rounded-full border border-dashed border-[#e6c887]/15" />
@@ -206,7 +203,6 @@ export default function CelestialInteractiveScene({ onContinue }: CelestialInter
               transform: 'rotateZ(15deg) rotateX(68deg)'
             }}
           >
-            {/* North, South, East, West Star Beacons */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[#faeed1] shadow-[0_0_16px_#faeed1]" />
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-3 h-3 rounded-full bg-[#e6c887] shadow-[0_0_12px_#e6c887]" />
             <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#faeed1]" />
@@ -237,16 +233,6 @@ export default function CelestialInteractiveScene({ onContinue }: CelestialInter
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#faeed1]" />
           </div>
 
-          {/* Ring 4 - Deep Indigo Axis Ring */}
-          <div
-            className="absolute inset-20 sm:inset-28 rounded-full border border-[#e6c887]/40 animate-spin"
-            style={{
-              animationDuration: '14s',
-              animationDirection: 'reverse',
-              transform: 'rotateZ(-55deg) rotateY(35deg)'
-            }}
-          />
-
           {/* Central Luminous Core ("Keti's Star") */}
           <div className="relative w-28 sm:w-36 h-28 sm:h-36 rounded-full bg-gradient-to-tr from-[#0a232c] via-[#1a4a58] to-[#e6c887] p-1.5 shadow-[0_0_60px_rgba(230,200,135,0.65)] flex items-center justify-center animate-pulse">
             <div className="w-full h-full rounded-full bg-[#071922] flex flex-col items-center justify-center border-2 border-[#e6c887]/80">
@@ -261,9 +247,8 @@ export default function CelestialInteractiveScene({ onContinue }: CelestialInter
         </div>
       </div>
 
-      {/* Compact, Refined Bottom Toolbar */}
+      {/* Refined Bottom Toolbar */}
       <div className="shrink-0 flex items-center justify-between w-full max-w-xl mx-auto gap-4 z-20">
-        {/* Mode Toggles */}
         <div className="flex items-center gap-1.5 p-1 bg-[#091e26]/90 border border-[#173e4d] rounded-2xl text-xs backdrop-blur-md">
           <button
             onClick={() => {
@@ -305,7 +290,6 @@ export default function CelestialInteractiveScene({ onContinue }: CelestialInter
           </button>
         </div>
 
-        {/* Primary Action Button to Next Scene */}
         <button
           onClick={() => {
             audioEngine.playStarSparkle();
