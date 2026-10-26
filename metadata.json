@@ -1,0 +1,7 @@
+{
+  "name": "For Keti — A Cinematic Birthday Journey",
+  "description": "An immersive, cinematic birthday celebration crafted for Keti, featuring starry skies, interactive celestial art, personal memories, heartfelt wishes, and birthday cake.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
